@@ -4,7 +4,6 @@
   "package": "me.bscal.bettershields.bettershields.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "LivingEntityAccessor",
     "LivingEntityMixin",
     "PlayerEntityMixin"
   ],

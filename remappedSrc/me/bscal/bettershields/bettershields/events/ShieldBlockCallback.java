@@ -13,22 +13,17 @@ public final class ShieldBlockCallback
 
 	public static Event<ShieldBlockAttempt> BLOCK_ATTEMPT_EVENT = EventFactory.createArrayBacked(ShieldBlockAttempt.class,
 			(listeners) -> (ent, source, amount, baseAmount, hand, stack) -> {
-				ShieldEventResult res = new ShieldEventResult(ActionResult.PASS, amount, amount);
-
 				for (ShieldBlockAttempt listener : listeners)
 				{
-					res = listener.OnShieldBlockAttempt(ent, source, amount, baseAmount, hand, stack);
+					ShieldEventResult res = listener.OnShieldBlockAttempt(ent, source, amount, baseAmount, hand, stack);
 
-					if (res.result == ActionResult.SUCCESS)
-					{
-						amount = res.amount;
-					}
-					else if (res.result != ActionResult.PASS)
+					if (res.result != ActionResult.PASS)
 					{
 						return res;
 					}
 				}
-				return res;
+
+				return new ShieldEventResult(ActionResult.PASS, amount);
 			});
 
 
@@ -40,14 +35,12 @@ public final class ShieldBlockCallback
 	public static class ShieldEventResult
 	{
 		public final ActionResult result;
-		public final float amount;
-		public final float baseAmount;
+		public final float value;
 
-		public ShieldEventResult(ActionResult res, float amount, float baseAmount)
+		public ShieldEventResult(ActionResult res, float val)
 		{
-			this.result = res;
-			this.amount = amount;
-			this.baseAmount = baseAmount;
+			result = res;
+			value = val;
 		}
 	}
 
