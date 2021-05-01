@@ -1,7 +1,7 @@
-package me.bscal.bettershields.bettershields.mixin;
+package me.bscal.bettershields.bettershields.common.mixin;
 
 import me.bscal.bettershields.bettershields.BetterShields;
-import me.bscal.bettershields.bettershields.events.ShieldBlockCallback;
+import me.bscal.bettershields.bettershields.common.events.ShieldBlockCallback;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;

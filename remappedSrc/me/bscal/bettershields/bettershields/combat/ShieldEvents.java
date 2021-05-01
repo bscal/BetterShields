@@ -1,4 +1,4 @@
-package me.bscal.bettershields.bettershields.combat;
+package me.bscal.bettershields.bettershields.common.combat;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

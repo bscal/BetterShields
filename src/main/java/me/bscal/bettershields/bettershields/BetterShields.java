@@ -1,5 +1,7 @@
 package me.bscal.bettershields.bettershields;
 
+import me.bscal.bettershields.bettershields.common.combat.listeners.ShieldBlockListener;
+import me.bscal.bettershields.bettershields.common.events.ShieldBlockCallback;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +20,6 @@ public class BetterShields implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-
+		ShieldBlockCallback.SHIELD_BLOCK_EVENT.register(new ShieldBlockListener());
 	}
 }

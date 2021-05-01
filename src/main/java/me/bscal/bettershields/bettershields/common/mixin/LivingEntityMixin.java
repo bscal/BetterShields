@@ -1,6 +1,6 @@
-package me.bscal.bettershields.bettershields.mixin;
+package me.bscal.bettershields.bettershields.common.mixin;
 
-import me.bscal.bettershields.bettershields.events.ShieldBlockCallback;
+import me.bscal.bettershields.bettershields.common.events.ShieldBlockCallback;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -24,21 +23,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 		LivingEntity ent = (LivingEntity) (Object) this;
 		Hand hand = ent.getActiveHand();
 		ItemStack stack = ent.getActiveItem();
-		ShieldBlockCallback.ShieldEventResult res = ShieldBlockCallback.BLOCK_ATTEMPT_EVENT.invoker()
-				.OnShieldBlockAttempt(ent, source, amount, amount, hand, stack);
+		ShieldBlockCallback.ShieldEventResult res = ShieldBlockCallback.SHIELD_BLOCK_EVENT.invoker()
+				.OnShieldBlock(ent, source, amount, amount, hand, stack);
 		m_tempAmount = res.amount;
 	}
 
-	@ModifyVariable(argsOnly = true, ordinal = 0, method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damageShield(F)V"))
+	/**
+	 * Sets the variable `amount` to `m_tempAmount`
+	 * @param amount - this value will be 0 if no other mixins modify it.
+	 * @return the amount of damage that should be taken after the block.
+	 */
+	@ModifyVariable(argsOnly = true, ordinal = 0, method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/damage/DamageSource;isProjectile()Z"))
 	private float UpdateAmountVar(float amount)
 	{
 		return m_tempAmount;
 	}
 
-	@ModifyArg(index = 0, method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damageShield(F)V"))
-	private float ModArgDamageShield(float amount)
+	@Unique
+	public float GetTempDamage()
 	{
 		return m_tempAmount;
 	}
-
 }

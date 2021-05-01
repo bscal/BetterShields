@@ -1,4 +1,4 @@
-package me.bscal.bettershields.bettershields.events;
+package me.bscal.bettershields.bettershields.common.events;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;

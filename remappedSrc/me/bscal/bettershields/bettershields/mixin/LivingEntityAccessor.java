@@ -1,4 +1,4 @@
-package me.bscal.bettershields.bettershields.mixin;
+package me.bscal.bettershields.bettershields.common.mixin;
 
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;

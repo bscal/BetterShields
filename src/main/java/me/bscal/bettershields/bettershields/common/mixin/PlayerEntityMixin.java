@@ -1,4 +1,4 @@
-package me.bscal.bettershields.bettershields.mixin;
+package me.bscal.bettershields.bettershields.common.mixin;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(PlayerEntity.class) public abstract class PlayerEntityMixin extends LivingEntity
 {
@@ -15,11 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 		super(entityType, world);
 	}
 
-//	@Inject(method = "Lnet/minecraft/entity/player/PlayerEntity;takeShieldHit(Lnet/minecraft/entity/LivingEntity;)V", at = @At("HEAD"), cancellable = true)
-//	public void onTakeShieldHit(LivingEntity attacker, CallbackInfo ci)
-//	{
-//	}
-
+	@Unique
 	public void DisableShield(int duration)
 	{
 		PlayerEntity player = (PlayerEntity) (Object) this;

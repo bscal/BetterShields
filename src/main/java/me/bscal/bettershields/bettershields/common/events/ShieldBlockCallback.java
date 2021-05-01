@@ -1,4 +1,4 @@
-package me.bscal.bettershields.bettershields.events;
+package me.bscal.bettershields.bettershields.common.events;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
@@ -11,13 +11,22 @@ import net.minecraft.util.Hand;
 public final class ShieldBlockCallback
 {
 
-	public static Event<ShieldBlockAttempt> BLOCK_ATTEMPT_EVENT = EventFactory.createArrayBacked(ShieldBlockAttempt.class,
+	/**
+	 * Callback when a shield blocks an attack.
+	 * Called after block detected but before any logic.
+	 * Upon return:
+	 * - SUCCESS will continue and set current damage amount to `ShieldBlockEvent.amount` value
+	 * - PASS will continue.
+	 * - FAIL cancels and returns current ShieldEventResult.
+	 */
+	public static Event<ShieldBlockEvent> SHIELD_BLOCK_EVENT = EventFactory.createArrayBacked(
+			ShieldBlockEvent.class,
 			(listeners) -> (ent, source, amount, baseAmount, hand, stack) -> {
 				ShieldEventResult res = new ShieldEventResult(ActionResult.PASS, amount, amount);
 
-				for (ShieldBlockAttempt listener : listeners)
+				for (ShieldBlockEvent listener : listeners)
 				{
-					res = listener.OnShieldBlockAttempt(ent, source, amount, baseAmount, hand, stack);
+					res = listener.OnShieldBlock(ent, source, amount, baseAmount, hand, stack);
 
 					if (res.result == ActionResult.SUCCESS)
 					{
@@ -33,8 +42,9 @@ public final class ShieldBlockCallback
 
 
 	@FunctionalInterface
-	public interface ShieldBlockAttempt {
-		ShieldEventResult OnShieldBlockAttempt(LivingEntity ent, DamageSource source, float amount, float baseAmount, Hand hand, ItemStack stack);
+	public interface ShieldBlockEvent
+	{
+		ShieldEventResult OnShieldBlock(LivingEntity ent, DamageSource source, float amount, float baseAmount, Hand hand, ItemStack stack);
 	}
 
 	public static class ShieldEventResult

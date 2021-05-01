@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.bscal.bettershields.bettershields.mixin",
+  "package": "me.bscal.bettershields.bettershields.common.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "LivingEntityMixin",
