@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(PlayerEntity.class) public abstract class PlayerEntityMixin extends LivingEntity
+@Mixin(PlayerEntity.class) public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityAccessor
 {
 
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world)
@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.Unique;
 	}
 
 	@Unique
+	@Override
 	public void DisableShield(int duration)
 	{
 		PlayerEntity player = (PlayerEntity) (Object) this;
