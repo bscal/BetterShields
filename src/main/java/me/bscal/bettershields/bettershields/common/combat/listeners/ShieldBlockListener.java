@@ -1,7 +1,7 @@
 package me.bscal.bettershields.bettershields.common.combat.listeners;
 
 import me.bscal.bettershields.bettershields.common.events.ShieldBlockCallback;
-import me.bscal.bettershields.bettershields.common.mixin.PlayerEntityAccessor;
+import me.bscal.bettershields.bettershields.common.mixin_accessors.PlayerEntityAccessor;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

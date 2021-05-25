@@ -1,4 +1,4 @@
-package me.bscal.bettershields.bettershields.mixin_accessors;
+package me.bscal.bettershields.bettershields.common.mixin_accessors;
 
 import net.minecraft.entity.Entity;
 
