@@ -37,11 +37,13 @@ processResources {
     inputs.property "version", project.version
 
     from(sourceSets.main.resources.srcDirs) {
+        duplicatesStrategy(DuplicatesStrategy.WARN)
         include "fabric.mod.json"
         expand "version": project.version
     }
 
     from(sourceSets.main.resources.srcDirs) {
+        duplicatesStrategy(DuplicatesStrategy.WARN)
         exclude "fabric.mod.json"
     }
 }
