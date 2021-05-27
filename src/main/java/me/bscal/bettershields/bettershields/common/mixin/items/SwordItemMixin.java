@@ -33,13 +33,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 	public void onUse(World world, PlayerEntity user, Hand hand,
 			CallbackInfoReturnable<TypedActionResult<ItemStack>> cir)
 	{
-		if (!world.isClient())
+		if (!world.isClient() && hand == Hand.OFF_HAND)
 		{
-			if (DuelWieldUtils.TryAttackOffhand(world, user, hand))
-			{
-				cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
-				return;
-			}
+			DuelWieldUtils.TryAttackOffhand(world, user, hand);
+			cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
+			return;
 		}
 		cir.setReturnValue(TypedActionResult.pass(user.getStackInHand(hand)));
 	}

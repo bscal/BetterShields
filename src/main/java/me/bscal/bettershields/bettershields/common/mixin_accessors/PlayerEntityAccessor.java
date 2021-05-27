@@ -7,4 +7,6 @@ public interface PlayerEntityAccessor
 	void DisableShield(int duration);
 
 	void AttackOffhand(Entity target);
+
+	float GetOffhandAttackCooldownProgress(float baseTime);
 }

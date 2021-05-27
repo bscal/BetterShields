@@ -1,7 +1,10 @@
 package me.bscal.bettershields.bettershields.common.mixin.items;
 
+import me.bscal.bettershields.bettershields.common.mixin_accessors.PlayerEntityAccessor;
 import me.bscal.bettershields.bettershields.common.util.DuelWieldUtils;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
@@ -21,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @SuppressWarnings("UnresolvedMixinReference") @Mixin(AxeItem.class) public abstract class AxeItemMixin
 		extends MiningToolItem
 {
+	private boolean reset;
+
 	protected AxeItemMixin(float attackDamage, float attackSpeed, ToolMaterial material,
 			Tag<Block> effectiveBlocks, Settings settings)
 	{
@@ -38,13 +43,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 	public void onUse(World world, PlayerEntity user, Hand hand,
 			CallbackInfoReturnable<TypedActionResult<ItemStack>> cir)
 	{
-		if (!world.isClient())
+		//boolean onCd = (((PlayerEntityAccessor)user).GetOffhandAttackCooldownProgress(0.5f) < 1.0f); // TODO
+		if (!world.isClient() && hand == Hand.OFF_HAND)
 		{
-			if (DuelWieldUtils.TryAttackOffhand(world, user, hand))
-			{
-				cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
-				return;
-			}
+			DuelWieldUtils.TryAttackOffhand(world, user, hand);
+			cir.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
+			return;
 		}
 		cir.setReturnValue(TypedActionResult.pass(user.getStackInHand(hand)));
 	}
