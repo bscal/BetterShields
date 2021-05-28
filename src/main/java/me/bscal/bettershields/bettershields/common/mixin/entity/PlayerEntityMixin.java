@@ -1,5 +1,6 @@
 package me.bscal.bettershields.bettershields.common.mixin.entity;
 
+import me.bscal.bettershields.bettershields.common.api.OffhandWeapon;
 import me.bscal.bettershields.bettershields.common.mixin_accessors.PlayerEntityAccessor;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -39,8 +40,6 @@ import java.util.List;
 		implements PlayerEntityAccessor
 {
 
-	@Unique private static final float OFFHAND_DMG_REDUCTION = 0.8f;
-
 	@Unique private int m_lastOffhandAttackedTicks;
 
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world)
@@ -76,7 +75,7 @@ import java.util.List;
 	 */
 	@Unique
 	@Override
-	public void AttackOffhand(Entity target)
+	public void AttackOffhand(Entity target, final ItemStack offhandStack, final OffhandWeapon offhandWeapon)
 	{
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		if (target.isAttackable())
@@ -87,12 +86,11 @@ import java.util.List;
 				float h;
 				if (target instanceof LivingEntity)
 				{
-					h = EnchantmentHelper.getAttackDamage(this.getOffHandStack(),
-							((LivingEntity) target).getGroup());
+					h = EnchantmentHelper.getAttackDamage(offhandStack, ((LivingEntity) target).getGroup());
 				}
 				else
 				{
-					h = EnchantmentHelper.getAttackDamage(this.getOffHandStack(), EntityGroup.DEFAULT);
+					h = EnchantmentHelper.getAttackDamage(offhandStack, EntityGroup.DEFAULT);
 				}
 
 				float i = GetOffhandAttackCooldownProgress(0.5F);
@@ -128,8 +126,7 @@ import java.util.List;
 					double d = (double) (this.horizontalSpeed - this.prevHorizontalSpeed);
 					if (bl && !bl3 && !bl2 && this.onGround && d < (double) this.getMovementSpeed())
 					{
-						ItemStack itemStack = this.getStackInHand(Hand.OFF_HAND);
-						if (itemStack.getItem() instanceof SwordItem)
+						if (offhandStack.getItem() instanceof SwordItem)
 						{
 							bl4 = true;
 						}
@@ -149,7 +146,7 @@ import java.util.List;
 					}
 
 					Vec3d vec3d = target.getVelocity();
-					boolean bl6 = target.damage(DamageSource.player(player), f * OFFHAND_DMG_REDUCTION);
+					boolean bl6 = target.damage(DamageSource.player(player), f * offhandWeapon.GetOffhandDamageReduction());
 					if (bl6)
 					{
 						if (j > 0)
@@ -217,7 +214,8 @@ import java.util.List;
 									livingEntity.takeKnockback(0.4000000059604645D,
 											(double) MathHelper.sin(this.getYaw() * 0.017453292F),
 											(double) (-MathHelper.cos(this.getYaw() * 0.017453292F)));
-									livingEntity.damage(DamageSource.player(player), m * OFFHAND_DMG_REDUCTION);
+									livingEntity.damage(DamageSource.player(player),
+											m * offhandWeapon.GetOffhandDamageReduction());
 								}
 							}
 						}

@@ -4,14 +4,13 @@
   "package": "me.bscal.bettershields.bettershields.common.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "items.AxeItemMixin",
     "HeldItemRendererMixin",
+    "InGameHudMixin",
     "entity.LivingEntityInvoker",
     "entity.LivingEntityMixin",
-    "items.MiningToolItemMixin",
     "entity.PlayerEntityMixin",
-    "items.SwordItemMixin",
-    "items.ToolItemMixin"
+    "items.AxeItemMixin",
+    "items.SwordItemMixin"
   ],
   "client": [
   ],
