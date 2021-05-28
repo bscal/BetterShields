@@ -2,7 +2,9 @@ package me.bscal.bettershields.bettershields;
 
 import me.bscal.bettershields.bettershields.common.combat.listeners.ShieldBlockListener;
 import me.bscal.bettershields.bettershields.common.events.ShieldBlockCallback;
+import me.bscal.bettershields.bettershields.common.listeners.UseEntityListener;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +22,7 @@ public class BetterShields implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
+		UseEntityCallback.EVENT.register(new UseEntityListener());
 		ShieldBlockCallback.SHIELD_BLOCK_EVENT.register(new ShieldBlockListener());
 	}
 }
