@@ -323,4 +323,11 @@ import java.util.List;
 				((float) m_lastOffhandAttackedTicks + baseTime) / this.getAttackCooldownProgressPerTick(),
 				0.0F, 1.0F);
 	}
+
+	@Unique
+	@Override
+	public void ResetOffhandTicks()
+	{
+		m_lastOffhandAttackedTicks = 0;
+	}
 }

@@ -1,6 +1,7 @@
 package me.bscal.bettershields.bettershields.common.listeners;
 
 import me.bscal.bettershields.bettershields.common.api.OffhandWeapon;
+import me.bscal.bettershields.bettershields.common.mixin_accessors.PlayerEntityAccessor;
 import me.bscal.bettershields.bettershields.common.util.DuelWieldUtils;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.Entity;
@@ -38,6 +39,7 @@ public class UseEntityListener implements UseEntityCallback
 				}
 			}
 		}
+		((PlayerEntityAccessor)player).ResetOffhandTicks();
 		return ActionResult.PASS;
 	}
 }

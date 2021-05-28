@@ -11,4 +11,6 @@ public interface PlayerEntityAccessor
 	void AttackOffhand(Entity target, final ItemStack offhandStack, final OffhandWeapon offhandWeapon);
 
 	float GetOffhandAttackCooldownProgress(float baseTime);
+
+	void ResetOffhandTicks();
 }
