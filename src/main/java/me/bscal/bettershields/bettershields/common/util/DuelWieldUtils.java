@@ -35,7 +35,7 @@ public final class DuelWieldUtils
 	 */
 	public static void StopAttackingInOffhand(ServerPlayerEntity sPlayer)
 	{
-		ServerPlayNetworking.send(sPlayer, BSNetManager.STOP_USE_PACKET, PacketByteBufs.empty());
+		ServerPlayNetworking.send(sPlayer, BetterShields.STOP_USE_PACKET, PacketByteBufs.empty());
 	}
 
 	/**

@@ -12,5 +12,7 @@ public interface PlayerEntityAccessor
 
 	float GetOffhandAttackCooldownProgress(float baseTime);
 
+	// TODO genSources and have offhand attack speed player functions
+
 	void ResetOffhandTicks();
 }

@@ -2,6 +2,7 @@ package me.bscal.bettershields.bettershields.common.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.bscal.bettershields.bettershields.BetterShields;
+import me.bscal.bettershields.bettershields.common.api.OffhandWeapon;
 import me.bscal.bettershields.bettershields.common.mixin_accessors.PlayerEntityAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -31,14 +32,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 	{
 		InGameHud hud = (InGameHud) (Object) this;
 		MinecraftClient client = MinecraftClient.getInstance();
-		PlayerEntityAccessor player = (PlayerEntityAccessor) client.player;
-		if (client.options.attackIndicator == AttackIndicator.CROSSHAIR)
+		if (client.player != null && client.player.getOffHandStack()
+				.getItem() instanceof OffhandWeapon && client.options.getAttackIndicator().getValue() == AttackIndicator.CROSSHAIR)
 		{
+			PlayerEntityAccessor player = (PlayerEntityAccessor) client.player;
 			RenderSystem.setShaderTexture(0, BETTER_COMBAT_ICONS_TEXTURE);
 			RenderMainHand(matrices, hud, client, player);
 			RenderOffHand(matrices, hud, client, player);
+			ci.cancel();
 		}
-		ci.cancel();
+
 	}
 
 	private void RenderMainHand(MatrixStack matrices, InGameHud hud, MinecraftClient client,
@@ -89,7 +92,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 		{
 			int l = (int) (18 - (f * 17));
 			hud.drawTexture(matrices, k, j, 84, 94, 16, 4);
-			hud.drawTexture(matrices, k + l, j, 100 + l , 94, 16 - l, 4);
+			hud.drawTexture(matrices, k + l, j, 100 + l, 94, 16 - l, 4);
 		}
 
 		matrices.pop();

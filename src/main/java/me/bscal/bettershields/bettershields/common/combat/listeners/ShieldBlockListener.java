@@ -2,10 +2,10 @@ package me.bscal.bettershields.bettershields.common.combat.listeners;
 
 import me.bscal.bettershields.bettershields.common.events.ShieldBlockCallback;
 import me.bscal.bettershields.bettershields.common.mixin_accessors.PlayerEntityAccessor;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -38,7 +38,7 @@ public class ShieldBlockListener implements ShieldBlockCallback.ShieldBlockEvent
 		{
 			LivingEntity attacker = (LivingEntity) source.getSource();
 			ItemStack mainHand = attacker.getActiveItem();
-			if (mainHand.isIn(FabricToolTags.AXES))
+			if (mainHand.getItem() instanceof AxeItem)
 			{
 				TryDisableShield(ent, 200);
 				return new ShieldBlockCallback.ShieldEventResult(ActionResult.PASS,
