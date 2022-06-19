@@ -1,10 +1,8 @@
 package me.bscal.bettershields.bettershields.common.items;
 
-import me.bscal.bettershields.bettershields.common.entity.RockEntity;
+import me.bscal.bettershields.bettershields.common.entity.RockBallEntity;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -22,8 +20,8 @@ public class RockBallItem extends Item
         HitEntitySoundEvent = hitEntitySoundEvent;
     }
 
-    public RockEntity Create(World world, ItemStack stack, LivingEntity shooter) {
-        return new RockEntity(world, shooter);
+    public RockBallEntity Create(World world, ItemStack stack, LivingEntity shooter) {
+        return new RockBallEntity(world, shooter);
     }
 
 }

@@ -25,15 +25,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 	@Shadow private int scaledWidth;
 
 	@Unique private static final Identifier BETTER_COMBAT_ICONS_TEXTURE = new Identifier(BetterShields.MOD_ID,
-			"textures/gui/icons.png");
+			"textures/ui/icons.png");
 
 	@Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V", ordinal = 0, shift = At.Shift.AFTER), cancellable = true)
 	public void OnRenderCrosshair(MatrixStack matrices, CallbackInfo ci)
 	{
 		InGameHud hud = (InGameHud) (Object) this;
 		MinecraftClient client = MinecraftClient.getInstance();
-		if (client.player != null && client.player.getOffHandStack()
-				.getItem() instanceof OffhandWeapon && client.options.getAttackIndicator().getValue() == AttackIndicator.CROSSHAIR)
+		if (client.player != null && client.player.getOffHandStack().getItem() instanceof OffhandWeapon
+				&& client.options.getAttackIndicator().getValue() == AttackIndicator.CROSSHAIR)
 		{
 			PlayerEntityAccessor player = (PlayerEntityAccessor) client.player;
 			RenderSystem.setShaderTexture(0, BETTER_COMBAT_ICONS_TEXTURE);

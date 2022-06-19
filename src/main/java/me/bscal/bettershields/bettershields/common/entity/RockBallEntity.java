@@ -11,38 +11,37 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
-public class RockEntity extends ThrownItemEntity
+public class RockBallEntity extends ThrownItemEntity
 {
 
     private static final Vec3f STONE_COLOR = new Vec3f(Vec3d.unpackRgb(0x808080));
-    private static final DustParticleEffect DUST_PARTICLE_EFFECT = new DustParticleEffect(STONE_COLOR, .5f);
+    private static final DustParticleEffect DUST_PARTICLE_EFFECT = new DustParticleEffect(STONE_COLOR, .6f);
 
     public float Damage = 2.0f;
 
-    public RockEntity(EntityType<? extends RockEntity> entityType, World world)
+
+    public RockBallEntity(EntityType<? extends RockBallEntity> entityType, World world)
     {
         super(entityType, world);
     }
 
-    public RockEntity(World world, LivingEntity owner)
+    public RockBallEntity(World world, LivingEntity owner)
     {
         super(BetterShields.ROCK_ENTITY, owner, world);
     }
 
-    public RockEntity(World world, double x, double y, double z)
+    public RockBallEntity(World world, double x, double y, double z)
     {
         super(BetterShields.ROCK_ENTITY, x, y, z, world);
     }
@@ -99,7 +98,7 @@ public class RockEntity extends ThrownItemEntity
                     this.playSound(rock.HitEntitySoundEvent, 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                 }
             }
-            BetterShields.LOGGER.info("onEntityHit");
+            BetterShields.LOGGER.info("onEntityHit, dmg = " + damage);
         }
     }
 
