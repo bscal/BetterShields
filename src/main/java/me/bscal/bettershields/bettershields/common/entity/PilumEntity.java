@@ -2,38 +2,39 @@ package me.bscal.bettershields.bettershields.common.entity;
 
 import me.bscal.bettershields.bettershields.BetterShields;
 import me.bscal.bettershields.bettershields.common.items.JavelinItem;
-import me.bscal.bettershields.bettershields.common.registry.ItemRegistry;
+import me.bscal.bettershields.bettershields.common.items.PilumItem;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.ToolMaterials;
 import net.minecraft.world.World;
 
-public class JavelinEntity extends PersistentProjectileEntity
+public class PilumEntity extends PersistentProjectileEntity
 {
 
     public ToolMaterial TipMaterial;
 
-    public JavelinEntity(EntityType<? extends JavelinEntity> entityType, World world)
+    public PilumEntity(EntityType<? extends PilumEntity> entityType, World world)
     {
         super(entityType, world);
     }
 
-    public JavelinEntity(World world, double x, double y, double z)
+    public PilumEntity(World world, double x, double y, double z)
     {
-        super(BetterShields.JAVELIN_ENTITY, x, y, z, world);
+        super(BetterShields.PILUM_ENTITY, x, y, z, world);
     }
 
-    public JavelinEntity(World world, LivingEntity owner)
+    public PilumEntity(World world, LivingEntity owner)
     {
-        super(BetterShields.JAVELIN_ENTITY, owner, world);
+        super(BetterShields.PILUM_ENTITY, owner, world);
     }
 
     @Override
     protected ItemStack asItemStack()
     {
-        return JavelinItem.GetStackForTip(TipMaterial);
+        return PilumItem.GetStackForTip(TipMaterial);
     }
+
 }

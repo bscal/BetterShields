@@ -1,17 +1,12 @@
 package me.bscal.bettershields.bettershields.common.registry;
 
 import me.bscal.bettershields.bettershields.BetterShields;
-import me.bscal.bettershields.bettershields.common.items.DaggerItem;
-import me.bscal.bettershields.bettershields.common.items.ItemGeneration;
-import me.bscal.bettershields.bettershields.common.items.RockBallItem;
-import me.bscal.bettershields.bettershields.common.items.SlingItem;
+import me.bscal.bettershields.bettershields.common.items.*;
 import net.devtech.arrp.json.models.JModel;
 import net.devtech.arrp.json.models.JOverride;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.*;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -21,9 +16,16 @@ public class ItemRegistry
 
     public static final Item WOODEN_DAGGER = RegisterItemHandheld(Id("wooden_dagger"),
             new DaggerItem(ToolMaterials.WOOD, 1, 2, new FabricItemSettings().group(ItemGroup.COMBAT)));
-
     public static final SlingItem SLING = (SlingItem) RegisterSlingItem(Id("sling"),
             new SlingItem(new FabricItemSettings().group(ItemGroup.COMBAT)));
+
+    public static final JavelinItem FLINT_JAVELIN = (JavelinItem) RegisterItemHandheld(Id("flint_javelin"), new JavelinItem(BetterCombatToolMaterials.FLINT));
+    public static final JavelinItem IRON_JAVELIN = (JavelinItem) RegisterItemHandheld(Id("iron_javelin"), new JavelinItem(ToolMaterials.IRON));
+    public static final JavelinItem DIAMOND_JAVELIN = (JavelinItem) RegisterItemHandheld(Id("diamond_javelin"), new JavelinItem(ToolMaterials.DIAMOND));
+
+    public static final JavelinItem IRON_PILUM = (JavelinItem) RegisterItemHandheld(Id("iron_pilum"), new PilumItem(BetterCombatToolMaterials.FLINT));
+    public static final JavelinItem GOLD_PILUM = (JavelinItem) RegisterItemHandheld(Id("gold_pilum"), new PilumItem(ToolMaterials.IRON));
+    public static final JavelinItem NETHERITE_PILUM = (JavelinItem) RegisterItemHandheld(Id("netherite_pilum"), new PilumItem(ToolMaterials.DIAMOND));
 
     public static final Item ROCK_BALL = RegisterItemHandheld(Id("rock_ball"), new RockBallItem(SoundEvents.BLOCK_STONE_HIT));
 

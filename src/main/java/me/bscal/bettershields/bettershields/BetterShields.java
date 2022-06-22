@@ -1,6 +1,9 @@
 package me.bscal.bettershields.bettershields;
 
+import me.bscal.bettershields.bettershields.client.renderers.JavelinEntityRenderer;
 import me.bscal.bettershields.bettershields.common.combat.listeners.ShieldBlockListener;
+import me.bscal.bettershields.bettershields.common.entity.JavelinEntity;
+import me.bscal.bettershields.bettershields.common.entity.PilumEntity;
 import me.bscal.bettershields.bettershields.common.entity.RockBallEntity;
 import me.bscal.bettershields.bettershields.common.events.ShieldBlockCallback;
 import me.bscal.bettershields.bettershields.common.items.ItemGeneration;
@@ -12,10 +15,12 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.minecraft.client.render.entity.ArrowEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
@@ -38,6 +43,20 @@ public class BetterShields implements ModInitializer
 					.trackRangeChunks(4).trackedUpdateRate(20)
 					.build());
 
+	public static final EntityType<JavelinEntity> JAVELIN_ENTITY = Registry.register(Registry.ENTITY_TYPE,
+			new Identifier(MOD_ID, "javelin_entity"),
+			FabricEntityTypeBuilder.<JavelinEntity>create(SpawnGroup.MISC, JavelinEntity::new)
+					.dimensions(EntityDimensions.fixed(1f, 1f))
+					.trackRangeChunks(4).trackedUpdateRate(20)
+					.build());
+
+	public static final EntityType<PilumEntity> PILUM_ENTITY = Registry.register(Registry.ENTITY_TYPE,
+			new Identifier(MOD_ID, "pilum_entity"),
+			FabricEntityTypeBuilder.<PilumEntity>create(SpawnGroup.MISC, PilumEntity::new)
+					.dimensions(EntityDimensions.fixed(1f, 1f))
+					.trackRangeChunks(4).trackedUpdateRate(20)
+					.build());
+
 	@Override
 	public void onInitialize()
 	{
@@ -47,8 +66,6 @@ public class BetterShields implements ModInitializer
 		UseEntityCallback.EVENT.register(new UseEntityListener());
 		UseItemCallback.EVENT.register(new UseItemListener());
 		ShieldBlockCallback.SHIELD_BLOCK_EVENT.register(new ShieldBlockListener());
-
-		EntityRendererRegistry.register(ROCK_ENTITY, FlyingItemEntityRenderer::new);
 	}
 
 }
