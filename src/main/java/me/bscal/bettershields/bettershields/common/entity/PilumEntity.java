@@ -1,20 +1,14 @@
 package me.bscal.bettershields.bettershields.common.entity;
 
 import me.bscal.bettershields.bettershields.BetterShields;
-import me.bscal.bettershields.bettershields.common.items.JavelinItem;
 import me.bscal.bettershields.bettershields.common.items.PilumItem;
-import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
 import net.minecraft.world.World;
 
-public class PilumEntity extends PersistentProjectileEntity
+public class PilumEntity extends JavelinEntity
 {
-
-    public ToolMaterial TipMaterial;
 
     public PilumEntity(EntityType<? extends PilumEntity> entityType, World world)
     {
@@ -23,18 +17,18 @@ public class PilumEntity extends PersistentProjectileEntity
 
     public PilumEntity(World world, double x, double y, double z)
     {
-        super(BetterShields.PILUM_ENTITY, x, y, z, world);
+        super(BetterShields.PILUM_ENTITY, world, x, y, z);
     }
 
     public PilumEntity(World world, LivingEntity owner)
     {
-        super(BetterShields.PILUM_ENTITY, owner, world);
+        super(BetterShields.PILUM_ENTITY, world, owner);
     }
 
     @Override
     protected ItemStack asItemStack()
     {
-        return PilumItem.GetStackForTip(TipMaterial);
+        return PilumItem.GetStackForTip(GetTipMaterial());
     }
 
 }

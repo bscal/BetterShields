@@ -2,7 +2,6 @@ package me.bscal.bettershields.bettershields.client.renderers;
 
 import me.bscal.bettershields.bettershields.BetterShields;
 import me.bscal.bettershields.bettershields.common.entity.JavelinEntity;
-import me.bscal.bettershields.bettershields.common.registry.ItemRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -12,7 +11,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -33,11 +31,12 @@ public class JavelinEntityRenderer extends EntityRenderer<JavelinEntity>
     }
 
     @Override
-    public Identifier getTexture(JavelinEntity arrowEntity)
+    public Identifier getTexture(JavelinEntity entity)
     {
-        if (arrowEntity.TipMaterial == ToolMaterials.IRON)
+        byte tipMaterial = entity.GetTipMaterial();
+        if (tipMaterial == JavelinEntity.TipMaterials.IRON)
             return TEXTURE_IRON;
-        if (arrowEntity.TipMaterial == ToolMaterials.DIAMOND)
+        if (tipMaterial == JavelinEntity.TipMaterials.DIAMOND)
             return TEXTURE_DIAMOND;
         return TEXTURE_FLINT;
     }

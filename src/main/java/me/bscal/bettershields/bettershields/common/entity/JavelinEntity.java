@@ -2,38 +2,82 @@ package me.bscal.bettershields.bettershields.common.entity;
 
 import me.bscal.bettershields.bettershields.BetterShields;
 import me.bscal.bettershields.bettershields.common.items.JavelinItem;
-import me.bscal.bettershields.bettershields.common.registry.ItemRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.world.World;
 
 public class JavelinEntity extends PersistentProjectileEntity
 {
 
-    public ToolMaterial TipMaterial;
+    public static class TipMaterials
+    {
+        public static final byte NULL = 0;
+        public static final byte FLINT = 1;
+        public static final byte STONE = 2;
+        public static final byte IRON = 3;
+        public static final byte GOLD = 4;
+        public static final byte DIAMOND = 5;
+        public static final byte NETHERITE = 6;
+    }
+
+    private static final TrackedData<Byte> TIP_MATERIAL = DataTracker.registerData(JavelinEntity.class, TrackedDataHandlerRegistry.BYTE);
 
     public JavelinEntity(EntityType<? extends JavelinEntity> entityType, World world)
     {
         super(entityType, world);
     }
 
-    public JavelinEntity(World world, double x, double y, double z)
+    public JavelinEntity(EntityType<? extends JavelinEntity> entityType, World world, double x, double y, double z)
     {
-        super(BetterShields.JAVELIN_ENTITY, x, y, z, world);
+        super(entityType, x, y, z, world);
     }
 
-    public JavelinEntity(World world, LivingEntity owner)
+    public JavelinEntity(EntityType<? extends JavelinEntity> entityType, World world, LivingEntity owner)
     {
-        super(BetterShields.JAVELIN_ENTITY, owner, world);
+        super(entityType, owner, world);
+    }
+
+    public void SetTipMaterial(byte tipMaterial)
+    {
+        this.getDataTracker().set(TIP_MATERIAL, tipMaterial);
+    }
+
+    public byte GetTipMaterial()
+    {
+        return this.getDataTracker().get(TIP_MATERIAL);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt)
+    {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putByte("TipMaterial", GetTipMaterial());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt)
+    {
+        super.readCustomDataFromNbt(nbt);
+        SetTipMaterial(nbt.getByte("TipMaterial"));
+    }
+
+    @Override
+    protected void initDataTracker()
+    {
+        super.initDataTracker();
+        this.getDataTracker().startTracking(TIP_MATERIAL, TipMaterials.NULL);
     }
 
     @Override
     protected ItemStack asItemStack()
     {
-        return JavelinItem.GetStackForTip(TipMaterial);
+        return JavelinItem.GetStackForTip(GetTipMaterial());
     }
 }

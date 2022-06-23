@@ -1,11 +1,15 @@
 package me.bscal.bettershields.bettershields.common.items;
 
+import me.bscal.bettershields.bettershields.BetterShields;
 import me.bscal.bettershields.bettershields.common.entity.JavelinEntity;
 import me.bscal.bettershields.bettershields.common.registry.ItemRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.RangedWeaponItem;
+import net.minecraft.item.Vanishable;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -18,14 +22,14 @@ import java.util.function.Predicate;
 public class JavelinItem extends RangedWeaponItem implements Vanishable
 {
 
-    public ToolMaterial TipMaterial;
+    public final byte TipMaterial;
 
-    public JavelinItem(ToolMaterial tipMaterial)
+    public JavelinItem(byte tipMaterial)
     {
         this(tipMaterial, new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(8));
     }
 
-    public JavelinItem(ToolMaterial tipMaterial, FabricItemSettings settings)
+    public JavelinItem(byte tipMaterial, FabricItemSettings settings)
     {
         super(settings);
         TipMaterial = tipMaterial;
@@ -33,8 +37,8 @@ public class JavelinItem extends RangedWeaponItem implements Vanishable
 
     private JavelinEntity CreateJavelin(World world, ItemStack stack, LivingEntity shooter)
     {
-        JavelinEntity javelinEntity = new JavelinEntity(world, shooter);
-        javelinEntity.TipMaterial = TipMaterial;
+        JavelinEntity javelinEntity = new JavelinEntity(BetterShields.JAVELIN_ENTITY, world, shooter);
+        javelinEntity.SetTipMaterial(TipMaterial);
         return javelinEntity;
     }
 
@@ -53,14 +57,13 @@ public class JavelinItem extends RangedWeaponItem implements Vanishable
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks)
     {
-        if (!(user instanceof PlayerEntity playerEntity) || !(stack.getItem() instanceof JavelinItem javelinItem) || stack != playerEntity.getMainHandStack())
+        if (!(user instanceof PlayerEntity playerEntity) || !(stack.getItem() instanceof JavelinItem) || stack != playerEntity.getMainHandStack())
             return;
         float pullProgress = JavelinItem.GetPullProgress(this.getMaxUseTime(stack) - remainingUseTicks, stack);
         if (pullProgress < 0.1) return;
         if (!world.isClient)
         {
             JavelinEntity javelin = CreateJavelin(world, stack, playerEntity);
-            javelin.TipMaterial = javelinItem.TipMaterial;
             float pitch = playerEntity.getPitch() + 1.0f;
             float yaw = playerEntity.getYaw();
             javelin.setVelocity(playerEntity, pitch, yaw, 0.0f, pullProgress * 2f, 2.0f);
@@ -71,7 +74,6 @@ public class JavelinItem extends RangedWeaponItem implements Vanishable
             stack.decrement(1);
     }
 
-
     @Override
     public int getMaxUseTime(ItemStack stack)
     {
@@ -81,17 +83,14 @@ public class JavelinItem extends RangedWeaponItem implements Vanishable
     @Override
     public UseAction getUseAction(ItemStack stack)
     {
-        return UseAction.BOW;
+        return UseAction.SPEAR;
     }
 
     protected static float GetPullProgress(int useTicks, ItemStack stack)
     {
-        float f = (float) useTicks / (float) 40f;
-        if (f > 1.0f)
-        {
-            f = 1.0f;
-        }
-        return f;
+        float maxValue = 20.0f;
+        if (useTicks > maxValue) return 1.0f;
+        return maxValue / 20f;
     }
 
     @Override
@@ -106,11 +105,11 @@ public class JavelinItem extends RangedWeaponItem implements Vanishable
         return 15;
     }
 
-    public static ItemStack GetStackForTip(ToolMaterial tipMaterial)
+    public static ItemStack GetStackForTip(byte tipMaterial)
     {
-        if (tipMaterial == ToolMaterials.IRON)
+        if (tipMaterial == JavelinEntity.TipMaterials.IRON)
             return new ItemStack(ItemRegistry.IRON_JAVELIN);
-        if (tipMaterial == ToolMaterials.DIAMOND)
+        if (tipMaterial == JavelinEntity.TipMaterials.DIAMOND)
             return new ItemStack(ItemRegistry.DIAMOND_JAVELIN);
         return new ItemStack(ItemRegistry.FLINT_JAVELIN);
     }

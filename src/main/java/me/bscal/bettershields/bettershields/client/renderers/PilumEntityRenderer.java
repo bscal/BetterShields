@@ -32,11 +32,12 @@ public class PilumEntityRenderer extends EntityRenderer<PilumEntity>
     }
 
     @Override
-    public Identifier getTexture(PilumEntity arrowEntity)
+    public Identifier getTexture(PilumEntity entity)
     {
-        if (arrowEntity.TipMaterial == ToolMaterials.GOLD)
+        byte tipMaterial = entity.GetTipMaterial();
+        if (tipMaterial == JavelinEntity.TipMaterials.GOLD)
             return TEXTURE_GOLD;
-        if (arrowEntity.TipMaterial == ToolMaterials.NETHERITE)
+        if (tipMaterial == JavelinEntity.TipMaterials.NETHERITE)
             return TEXTURE_NETHERITE;
         return TEXTURE_IRON;
     }
