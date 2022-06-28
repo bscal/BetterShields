@@ -3,8 +3,7 @@ package me.bscal.bettershields.bettershields.common.registry;
 import me.bscal.bettershields.bettershields.BetterShields;
 import me.bscal.bettershields.bettershields.common.entity.JavelinEntity;
 import me.bscal.bettershields.bettershields.common.items.*;
-import net.devtech.arrp.json.models.JModel;
-import net.devtech.arrp.json.models.JOverride;
+import net.devtech.arrp.json.models.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.item.*;
@@ -73,6 +72,26 @@ public class ItemRegistry
         ItemGeneration.RESOURCE_PACK.addModel(JModel.model("minecraft:item/handheld").textures(JModel.textures().layer0(id.toString())), id);
         var condition = JModel.condition().parameter("swinging", 1).parameter("swing", swingPercentage);
         return JModel.override(condition, id);
+    }
+
+    public static JModel GenerateSpearJson(Identifier id, JPosition fplh, JPosition fprh, JPosition tplh, JPosition tprh, JPosition gui, JPosition fixed, JPosition ground)
+    {
+        var model = JModel.model("builtin/entity");
+
+        var display = new JDisplay();
+        display.setFirstperson_lefthand(fplh);
+        display.setFirstperson_righthand(fprh);
+        display.setThirdperson_lefthand(tplh);
+        display.setThirdperson_righthand(tprh);
+        display.setGui(gui);
+        display.setFixed(fixed);
+        display.setFixed(ground);
+        model.display(display);
+
+        var condition = JModel.condition().parameter("throwing", 1);
+        model.addOverride(JModel.override(condition, id));
+
+        return model;
     }
 
     public static void RegisterModelPredicateProviders()

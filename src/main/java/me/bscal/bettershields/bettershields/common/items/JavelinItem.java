@@ -6,10 +6,7 @@ import me.bscal.bettershields.bettershields.common.registry.ItemRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.RangedWeaponItem;
-import net.minecraft.item.Vanishable;
+import net.minecraft.item.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -19,7 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Predicate;
 
-public class JavelinItem extends RangedWeaponItem implements Vanishable
+public class JavelinItem extends Item implements Vanishable
 {
 
     public final byte TipMaterial;
@@ -91,18 +88,6 @@ public class JavelinItem extends RangedWeaponItem implements Vanishable
         float maxValue = 20.0f;
         if (useTicks > maxValue) return 1.0f;
         return maxValue / 20f;
-    }
-
-    @Override
-    public Predicate<ItemStack> getProjectiles()
-    {
-        return (itemStack) -> itemStack.getItem() instanceof JavelinItem javelinItem && javelinItem.TipMaterial == TipMaterial;
-    }
-
-    @Override
-    public int getRange()
-    {
-        return 15;
     }
 
     public static ItemStack GetStackForTip(byte tipMaterial)
