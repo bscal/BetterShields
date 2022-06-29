@@ -1,6 +1,5 @@
 package me.bscal.bettershields.bettershields;
 
-import me.bscal.bettershields.bettershields.client.renderers.JavelinEntityRenderer;
 import me.bscal.bettershields.bettershields.common.combat.listeners.ShieldBlockListener;
 import me.bscal.bettershields.bettershields.common.entity.JavelinEntity;
 import me.bscal.bettershields.bettershields.common.entity.PilumEntity;
@@ -11,16 +10,12 @@ import me.bscal.bettershields.bettershields.common.listeners.UseEntityListener;
 import me.bscal.bettershields.bettershields.common.listeners.UseItemListener;
 import me.bscal.bettershields.bettershields.common.registry.ItemRegistry;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.client.render.entity.ArrowEntityRenderer;
-import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
@@ -61,7 +56,7 @@ public class BetterShields implements ModInitializer
 	public void onInitialize()
 	{
 		ItemGeneration.Init();
-		ItemRegistry.Init();
+		ItemRegistry.RegisterModelPredicateProviders();
 
 		UseEntityCallback.EVENT.register(new UseEntityListener());
 		UseItemCallback.EVENT.register(new UseItemListener());

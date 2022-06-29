@@ -3,6 +3,7 @@ package me.bscal.bettershields.bettershields.common.items;
 import me.bscal.bettershields.bettershields.BetterShields;
 import me.bscal.bettershields.bettershields.common.entity.JavelinEntity;
 import me.bscal.bettershields.bettershields.common.registry.ItemRegistry;
+import net.devtech.arrp.json.models.JDisplay;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
