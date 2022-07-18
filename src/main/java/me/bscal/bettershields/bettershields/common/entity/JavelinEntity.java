@@ -55,6 +55,12 @@ public class JavelinEntity extends PersistentProjectileEntity
     }
 
     @Override
+    public byte getPierceLevel()
+    {
+        return 0;
+    }
+
+    @Override
     public void writeCustomDataToNbt(NbtCompound nbt)
     {
         super.writeCustomDataToNbt(nbt);

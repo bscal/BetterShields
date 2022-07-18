@@ -6,6 +6,7 @@
   "mixins": [
     "HeldItemRendererMixin",
     "InGameHudMixin",
+    "entity.DamageSourceInvoker",
     "entity.LivingEntityInvoker",
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",

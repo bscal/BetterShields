@@ -26,6 +26,12 @@ public class PilumEntity extends JavelinEntity
     }
 
     @Override
+    public byte getPierceLevel()
+    {
+        return 1;
+    }
+
+    @Override
     protected ItemStack asItemStack()
     {
         return PilumItem.GetStackForTip(GetTipMaterial());

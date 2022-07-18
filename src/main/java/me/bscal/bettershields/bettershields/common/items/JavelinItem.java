@@ -40,6 +40,8 @@ public class JavelinItem extends Item implements Vanishable
         return javelinEntity;
     }
 
+
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand)
     {
